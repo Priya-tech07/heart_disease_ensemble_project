@@ -14,29 +14,26 @@ from risk_meter import generate_risk_meter
 # -----------------------------
 # Paths
 # -----------------------------
-MODEL_DIR = "models"
-DATA_DIR = "data/processed"
-SHAP_DIR = "reports/shap"
-REPORT_DIR = "reports"
+# -----------------------------
+# Dynamic Base Path (Cloud Safe)
+# -----------------------------
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+PROJECT_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))
+
+MODEL_DIR = os.path.join(PROJECT_ROOT, "models")
+DATA_DIR = os.path.join(PROJECT_ROOT, "data", "processed")
+SHAP_DIR = os.path.join(PROJECT_ROOT, "reports", "shap")
+REPORT_DIR = os.path.join(PROJECT_ROOT, "reports")
 
 os.makedirs(SHAP_DIR, exist_ok=True)
 os.makedirs(REPORT_DIR, exist_ok=True)
 
+
 # -----------------------------
 # Load dataset for feature columns
 # -----------------------------
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-DATA_PATH = os.path.join(
-    BASE_DIR,
-    "..",
-    "data",
-    "processed",
-    "merged_heart_dataset.csv"
-)
-
-merged_df = pd.read_csv(DATA_PATH)
-
+merged_df = pd.read_csv(os.path.join(DATA_DIR, "merged_heart_dataset.csv"))
 feature_cols = [c for c in merged_df.columns if c != "target"]
 
 # -----------------------------
