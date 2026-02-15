@@ -25,7 +25,18 @@ os.makedirs(REPORT_DIR, exist_ok=True)
 # -----------------------------
 # Load dataset for feature columns
 # -----------------------------
-merged_df = pd.read_csv(os.path.join(DATA_DIR, "merged_heart_dataset.csv"))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+DATA_PATH = os.path.join(
+    BASE_DIR,
+    "..",
+    "data",
+    "processed",
+    "merged_heart_dataset.csv"
+)
+
+merged_df = pd.read_csv(DATA_PATH)
+
 feature_cols = [c for c in merged_df.columns if c != "target"]
 
 # -----------------------------
